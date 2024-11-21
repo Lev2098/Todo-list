@@ -3,7 +3,6 @@ from http.client import HTTPResponse
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.views import generic
-from django.views.generic import ListView
 from django.urls import reverse_lazy
 
 from todo_manager.forms import TaskForm
