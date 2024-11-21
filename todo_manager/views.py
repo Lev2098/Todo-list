@@ -11,7 +11,7 @@ from todo_manager.models import Task, Tag
 def index(request:HttpRequest) -> HTTPResponse:
     return  render(request, "todo_manager/index.html",)
 
-class TaskViewList(generic.ListView):
+class TaskListView(generic.ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "todo_manager/tasks.html"
