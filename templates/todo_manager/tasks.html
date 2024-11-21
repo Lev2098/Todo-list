@@ -12,12 +12,15 @@
         {% for task in tasks %}
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">{{ task.content }}
+              <h5 class="card-title">{{ task.content }} 
                 {% if task.is_done %}
                   <span class="text-success">Done</span>
                 {% else %}
                   <span class="text-danger">Not Done</span>
-                {% endif %}</h5>
+                {% endif %}
+                <a href="{% url 'todo_manager:task-create' %}">add new task</a>
+              </h5>
+            
               <p class="card-text">
                 <strong>Created:</strong> {{ task.datatime|date:"F d, Y, g:i a" }}<br>
                 <strong>Tags:</strong>
