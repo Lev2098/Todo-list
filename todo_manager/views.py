@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic import ListView
 from django.urls import reverse_lazy
+
+from todo_manager.forms import TaskForm
 from todo_manager.models import Task, Tag
 
 
@@ -19,13 +21,15 @@ class TaskListView(generic.ListView):
 
 class TaskCreateView(generic.CreateView):
     model = Task
-    fields = ["content", "deadline", "is_done", "tags"]
+    form_class = TaskForm
     success_url = reverse_lazy("task_list")
 
+    def form_valid(self, form):
+        return redirect('todo_manager:task-list')
 
 class TaskUpdateView(generic.UpdateView):
     model = Task
-    fields = ["content", "deadline", "is_done", "tags"]
+    form_class = TaskForm
     success_url = reverse_lazy("task_list")
 
     def form_valid(self, form):
