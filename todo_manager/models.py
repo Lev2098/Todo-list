@@ -4,6 +4,9 @@ from django.db import models
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
+    def get_absolute_url(self):
+        return f"/tags"
+
     def __str__(self):
         return self.name
 
@@ -17,6 +20,9 @@ class Task(models.Model):
 
     class Meta:
         ordering = ["is_done", "-datatime"]
+
+    def get_absolute_url(self):
+        return f"/tasks"
 
     def __str__(self):
         return self.content

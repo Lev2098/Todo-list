@@ -8,41 +8,52 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-md-9">
-        <h1 class="mb-4">TODO List</h1>
+        <h1 class="mb-4">TODO list
+          <a href="{% url 'todo_manager:task-create' %}" class="btn btn-primary float-end">Add task</a>
+        </h1>
         {% for task in tasks %}
           <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">{{ task.content }} 
+              <h5 class="card-title">{{ task.content }}
                 {% if task.is_done %}
                   <span class="text-success">Done</span>
                 {% else %}
-                  <span class="text-danger">Not Done</span>
+                  <span class="text-danger">Not done</span>
                 {% endif %}
-                <a href="{% url 'todo_manager:task-create' %}">add new task</a>
+              {% if not task.is_done %}
+                <div class="d-flex justify-content-end align-items-center mt-2">
+                  <a href="{% url 'todo_manager:task-complete' task.id %}" class="btn btn-success btn-sm">Complete</a>
+                </div>
+              {% else %}
+                <div class="d-flex justify-content-end align-items-center mt-2">
+                  <a href="{% url 'todo_manager:task-undo' task.id %}" class="btn btn-warning btn-sm">Undo</a>
+                </div>
+              {% endif %}
               </h5>
-            
+
               <p class="card-text">
-                <strong>Created:</strong> {{ task.datatime|date:"F d, Y, g:i a" }}<br>
-                <strong>Tags:</strong>
+                Created: {{ task.datatime|date:"F d, Y, g:i a" }}
+{#                {% if task.deadline %}#}
+{#                  <br>Deadline: {{ task.deadline|date:"F d, Y, g:i a" }}#}
+{#                {% endif %}#}
+                <br>
+                Tags:
                 {% for tag in task.tags.all %}
                   <span class="badge bg-secondary">{{ tag.name }}</span>
                 {% empty %}
                   None
                 {% endfor %}
               </p>
-              <a href="{% url 'todo_manager:task-update' task.id %}" class="btn btn-primary btn-sm">Update</a>
-              <a href="{% url 'todo_manager:task-delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
-              {% if not task.is_done %}
-{#                <a href="{% url 'task_complete' task.id %}" class="btn btn-success btn-sm">Complete</a>#}
-              {% else %}
-{#                <a href="{% url 'task_undo' task.id %}" class="btn btn-warning btn-sm">Undo</a>#}
-              {% endif %}
+
+              <div class="d-flex justify-content-end">
+                <a href="{% url 'todo_manager:task-update' task.id %}" class="btn btn-secondary btn-sm me-2">Update</a>
+                <a href="{% url 'todo_manager:task-delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
             </div>
           </div>
         {% empty %}
           <p>No tasks found.</p>
         {% endfor %}
-{#        <a href="{% url 'task_add' %}" class="btn btn-success mt-4">Add Task</a>#}
       </div>
     </div>
   </div>

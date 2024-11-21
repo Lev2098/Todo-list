@@ -1,1 +1,37 @@
 {% extends "base.html" %}
+
+{% block title %}
+  <title>Tags</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h1>
+        Tags  <a href="{% url 'todo_manager:tag-create' %}" class="btn btn-primary mb-3">Add New Tag</a>
+    </h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tag in tags %}
+          <tr>
+            <td>{{ tag.name }}</td>
+            <td>
+              <a href="{% url 'todo_manager:tag-update' tag.id %}" class="btn btn-warning btn-sm">Update</a>
+              <a href="{% url 'todo_manager:tag-delete' tag.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="2">No tags found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
