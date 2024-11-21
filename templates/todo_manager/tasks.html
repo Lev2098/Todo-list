@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>TODO List</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-9">
+        <h1 class="mb-4">TODO List</h1>
+        {% for task in tasks %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ task.content }}
+                {% if task.is_done %}
+                  <span class="text-success">Done</span>
+                {% else %}
+                  <span class="text-danger">Not Done</span>
+                {% endif %}</h5>
+              <p class="card-text">
+                <strong>Created:</strong> {{ task.datatime|date:"F d, Y, g:i a" }}<br>
+                <strong>Tags:</strong>
+                {% for tag in task.tags.all %}
+                  <span class="badge bg-secondary">{{ tag.name }}</span>
+                {% empty %}
+                  None
+                {% endfor %}
+              </p>
+              <a href="{% url 'todo_manager:task-update' task.id %}" class="btn btn-primary btn-sm">Update</a>
+              <a href="{% url 'todo_manager:task-delete' task.id %}" class="btn btn-danger btn-sm">Delete</a>
+              {% if not task.is_done %}
+{#                <a href="{% url 'task_complete' task.id %}" class="btn btn-success btn-sm">Complete</a>#}
+              {% else %}
+{#                <a href="{% url 'task_undo' task.id %}" class="btn btn-warning btn-sm">Undo</a>#}
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <p>No tasks found.</p>
+        {% endfor %}
+{#        <a href="{% url 'task_add' %}" class="btn btn-success mt-4">Add Task</a>#}
+      </div>
+    </div>
+  </div>
+{% endblock %}
