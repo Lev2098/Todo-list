@@ -12,6 +12,7 @@ from .views import (index,
                     )
 from django.urls import path
 
+
 urlpatterns = [
     path("", index, name="index"),
     path("tasks/", TaskListView.as_view(), name="task-list"),

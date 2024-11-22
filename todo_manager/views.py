@@ -2,20 +2,22 @@ from http.client import HTTPResponse
 
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic
-from django.views import View
-from todo_manager.forms import TaskForm
-from todo_manager.models import Task, Tag
+from django.views import generic, View
+
+from .forms import TaskForm
+from .models import Task, Tag
 
 
 def index(request:HttpRequest) -> HTTPResponse:
     return  render(request, "todo_manager/index.html",)
+
 
 class TaskListView(generic.ListView):
     model = Task
     context_object_name = "tasks"
     template_name = "todo_manager/tasks.html"
     paginate_by = 3
+
 
 class TaskCreateView(generic.CreateView):
     model = Task
@@ -34,16 +36,17 @@ class TaskDeleteView(generic.DeleteView):
 class TaskCompleteView(View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
-        task.is_done = True  # Позначаємо задачу як завершену
+        task.is_done = True
         task.save()
-        return redirect('todo_manager:task-list')  # Повертаємось на сторінку списку задач
+        return redirect('todo_manager:task-list')
+
 
 class TaskUndoView(View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
-        task.is_done = False  # Скасовуємо позначку про завершення
+        task.is_done = False
         task.save()
-        return redirect('todo_manager:task-list')  # Повертаємось на сторінку списку задач
+        return redirect('todo_manager:task-list')
 
 
 class TagListView(generic.ListView):
