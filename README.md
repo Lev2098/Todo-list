@@ -18,7 +18,7 @@ This is a simple TODO list application built with Django.
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/username/todo-list.git
+   git clone https://github.com/Lev2098/todo-list.git
    ```
 
 2. Navigate to the project directory:
